@@ -1,0 +1,17 @@
+# Cloud backend
+fastapi
+uvicorn
+pydantic
+
+# Dashboard
+streamlit
+
+# ML pipeline
+tensorflow
+scikit-learn
+pandas
+numpy
+joblib
+
+# Plotting (training pipeline visualizations)
+matplotlib
