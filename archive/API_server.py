@@ -1,3 +1,13 @@
+"""
+api_server.py — FastAPI Cloud
+================================
+Reçoit le JSON de pc_edge.py, fusionne avec SQLite,
+classifie le type de panne HPC/Fan, expose les routes
+pour le dashboard Streamlit.
+
+Lancer : uvicorn api_server:app --host 0.0.0.0 --port 8000 --reload
+"""
+
 import os
 import sqlite3
 from contextlib import asynccontextmanager, contextmanager

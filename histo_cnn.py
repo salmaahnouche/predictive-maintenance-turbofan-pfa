@@ -395,6 +395,21 @@ def convertir_en_c_array(tflite_bytes, nom_fichier_h, nom_variable):
         
 convertir_en_c_array(tflite_model, "cerveau_cnn.h", "cerveau_cnn_tflite")
 print("Export ESP32 : cerveau_cnn.tflite + cerveau_cnn.h générés avec succès !")
+
+# ─────────────────────────────────────────
+# Export LSTM → TFLite (modèle final, sans contrainte ESP32)
+# ─────────────────────────────────────────
+print("\nConversion du modèle LSTM en TensorFlow Lite...")
+
+converter_lstm = tf.lite.TFLiteConverter.from_keras_model(lstm)
+converter_lstm.optimizations = [tf.lite.Optimize.DEFAULT]
+tflite_lstm_model = converter_lstm.convert()
+
+with open("cerveau_lstm.tflite", "wb") as f:
+    f.write(tflite_lstm_model)
+
+print("Export : cerveau_lstm.tflite généré avec succès !")
+
 # ═════════════════════════════════════════
 # PIPELINE 2 : DÉTECTION DE PANNES
 # ═════════════════════════════════════════

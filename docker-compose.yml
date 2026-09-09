@@ -1,0 +1,63 @@
+services:
+  cloud:
+    build: ./cloud
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./cloud/historique.db:/app/historique.db
+    networks:
+      - twin-net
+
+  edge-moteur-1:
+    build: ./edge
+    environment:
+      - MOTEUR_ID=1
+      - CSV_PATH=/app/data/test_FD003_moteur_1.csv
+      - MODEL_PATH=/app/cerveau_lstm.tflite
+      - CLOUD_URL=http://cloud:8000/api/maintenance/upload
+      - SEND_DELAY=2
+    depends_on:
+      - cloud
+    networks:
+      - twin-net
+
+  edge-moteur-2:
+    build: ./edge
+    environment:
+      - MOTEUR_ID=2
+      - CSV_PATH=/app/data/test_FD003_moteur_2.csv
+      - MODEL_PATH=/app/cerveau_lstm.tflite
+      - CLOUD_URL=http://cloud:8000/api/maintenance/upload
+      - SEND_DELAY=2
+    depends_on:
+      - cloud
+    networks:
+      - twin-net
+
+  edge-moteur-3:
+    build: ./edge
+    environment:
+      - MOTEUR_ID=3
+      - CSV_PATH=/app/data/test_FD003_moteur_3.csv
+      - MODEL_PATH=/app/cerveau_lstm.tflite
+      - CLOUD_URL=http://cloud:8000/api/maintenance/upload
+      - SEND_DELAY=2
+    depends_on:
+      - cloud
+    networks:
+      - twin-net
+
+  dashboard:
+    build: ./dashboard
+    ports:
+      - "8501:8501"
+    environment:
+      - CLOUD_API_URL=http://cloud:8000
+    depends_on:
+      - cloud
+    networks:
+      - twin-net
+
+networks:
+  twin-net:
+    driver: bridge

@@ -1,9 +1,3 @@
-"""
-dashboard.py — Tableau de bord Streamlit (Cloud) - Mode Dark SOC
-==================================================================
-Lancer : streamlit run dashboard.py
-"""
-
 import time
 from datetime import datetime
 
@@ -94,9 +88,6 @@ with st.sidebar:
     st.markdown("---")
     st.caption(f"Mis à jour : {datetime.now().strftime('%H:%M:%S')}")
 
-if auto_refresh:
-    time.sleep(refresh_interval)
-    st.rerun()
 
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -306,3 +297,7 @@ elif st.session_state.current_page == "Historique & Export":
     sessions = _get("/sessions", [])
     if sessions:
         st.dataframe(pd.DataFrame(sessions), use_container_width=True, hide_index=True)
+
+if auto_refresh:
+    time.sleep(refresh_interval)
+    st.rerun()
